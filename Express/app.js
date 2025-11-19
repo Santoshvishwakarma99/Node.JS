@@ -66,44 +66,44 @@ app.get("/", (req, res) => {
 
 
 
-// app.post("/insertData", (req, res) => {
-//     const { id, name } = req.body
-//     const obj = {
-//         id, name
-//     }
-//     student.push(obj)
+app.post("/insertData", (req, res) => {
+    const { id, name } = req.body
+    const obj = {
+        id, name
+    }
+    student.push(obj)
 
-//     res.redirect("/")
+    res.redirect("/")
 
-// })
+})
 
-// app.get("/delete", (req, res) => {
-//     const id = req.query.id
-//     const ans = student.filter((el, i) => {
-//         return el.id !== id
-//     })
-//     student = ans
-//     res.redirect("/")
-// })
+app.get("/delete", (req, res) => {
+    const id = req.query.id
+    const ans = student.filter((el, i) => {
+        return el.id !== id
+    })
+    student = ans
+    res.redirect("/")
+})
 
-// app.get("/edit", (req, res) => {
-//     const id = req.query.id
-//     const ans = student.filter((el, i) => {
-//         return el.id == id
-//     })
-//     res.render("edit", { editData: ans[0] })
-// })
+app.get("/edit", (req, res) => {
+    const id = req.query.id
+    const ans = student.filter((el, i) => {
+        return el.id == id
+    })
+    res.render("edit", { editData: ans[0] })
+})
 
-// app.post("/editData", (req, res) => {
-//     const { id, name } = req.body
-//     student.forEach(el => {
-//         if (el.id == id) {
-//             el.name = name
-//         }
-//     })
+app.post("/editData", (req, res) => {
+    const { id, name } = req.body
+    student.forEach(el => {
+        if (el.id == id) {
+            el.name = name
+        }
+    })
 
-//     res.redirect("/")
-// })
+    res.redirect("/")
+})
 
 app.use(middleware)
 
