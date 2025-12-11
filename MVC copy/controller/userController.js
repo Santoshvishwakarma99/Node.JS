@@ -24,6 +24,10 @@ res.cookie("user",user._id).send("login successful")
 
 };
 
+const local=(req,res)=>{
+   return res.send(" login local successful")
+}
+
 
 const getAllUsers=async(req,res)=>{
     const data=await usermodel.find();
@@ -42,4 +46,4 @@ const updateUser=async(req,res)=>{
     res.send(data);
 }
 
-module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister};
+module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister,local};

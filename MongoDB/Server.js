@@ -1,60 +1,46 @@
-const express = require("express")
-const db = require("./config/db")
-const usermodel = require("./model/usermodel.js")
-const app = express()
+const express = require('express');
+const db = require('./config/db');
+const usermodel = require('./model/userModel');
+const app = express();
 
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.set("view engine", "ejs")
-app.use(express.urlencoded())
-app.use(express.json())
-
+// Insert
 app.post("/insertData", async (req, res) => {
-    const data = await usermodel.create(req.body)
-    res.send(data)
-})
+    const data = await usermodel.create(req.body);
+    return res.send(data);
+});
 
-app.post("/edit", async (req, res) => {
+// Get all
+app.get('/', async (req, res) => {
+    const data = await usermodel.find({});
+    return res.send(data);
+});
+
+// Delete
+app.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    const data = await usermodel.findByIdAndDelete(id);
+
+    if (!data) {
+        return res.send("User not found");
+    }
+
+    res.send("Delete success");
+});
+
+app.patch("/:id", async (req, res) => {
     try {
-        const { user, ...updateData } = req.body;
-
-        const newuser = await usermodel.findOneAndUpdate(
-            { username: user },
-            { $set: updateData },
-            { new: true }
-        );
-
-        if (!newuser) {
-            return res.status(404).send("User not found");
-        }
-
-        res.send(newuser); // return updated data
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Error updating user");
+        const id = req.params.id;
+        const data = await usermodel.findByIdAndUpdate(id, req.body);
+        res.send(data);
+    } catch (err) {
+        res.send(err);
     }
 });
 
-
-app.post("/delete", async (req, res) => {
-    try {
-        const result = await usermodel.deleteOne({ username: req.body.username });
-        res.send(result);
-    } catch (error) {
-        res.send(error);
-    }
+app.listen(7800, () => {
+    console.log('Server is running on port 7800');
 });
-
-
-
-app.get("/", async (req, res) => {
-    const data = await usermodel.find({})
-    return res.send(data)
-
-
-    // res.render("Form")
-})
-
-
-app.listen(7000, () => {
-    console.log("Server listen");
-})

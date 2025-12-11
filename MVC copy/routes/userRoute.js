@@ -1,6 +1,7 @@
 const express = require('express');
 const isAuth=require("../middleware/Auth")
-const {Register, login ,getAllUsers , deleteUser, updateUser,Showlogin,Showregister }=require("../controller/userController")
+const {Register, login ,getAllUsers , deleteUser, updateUser,Showlogin,Showregister,local }=require("../controller/userController");
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get('/all', getAllUsers);
 router.delete('/delete/:id', deleteUser);
 router.patch('/update/:id', updateUser);
 router.get('/', isAuth,getAllUsers)
+router.post('/local',passport.authenticate('local'),local)
 
 
 module.exports = router;
