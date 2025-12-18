@@ -1,4 +1,6 @@
+const passport = require('passport');
 const usermodel=require('../model/usermodel');
+const nodemailer = require('nodemailer');
 
 const Showregister=(req,res)=>{
     res.render("register")
@@ -28,6 +30,43 @@ const local=(req,res)=>{
    return res.send(" login local successful")
 }
 
+// forget passport
+
+const password=async(req,res)=>{
+    const{id}=req.params;
+    let{newpassword}=req.body;
+    const data=await usermodel.findByIdAndUpdate(id,{password:newpassword});
+    res.send("update password",data);
+}
+
+let otp = Math.floor(Math.random() * 10000);
+const mail=(req,res)=>{
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "sv381739@gmail.com",
+            pass: "scalwnpapyhphlzx",
+        },
+    });
+
+    const mailOptions = {
+        from: "sv381739@gmail.com",
+        to: req.body.email,
+        subject: 'Password change',
+        html: `<p>${otp}</p>`,
+    };
+
+    transporter.sendMail(mailOptions,(err, data) =>{
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(data);
+        }
+        res.send("mail sent successfully");
+    });
+}
+
 
 const getAllUsers=async(req,res)=>{
     const data=await usermodel.find();
@@ -46,4 +85,4 @@ const updateUser=async(req,res)=>{
     res.send(data);
 }
 
-module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister,local};
+module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister,local,password,mail};
