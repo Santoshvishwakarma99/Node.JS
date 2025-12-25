@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+</head>
+
+<body>
+    <h3>Welcome <%= user.username %></h3>
+
+    <!-- Add/Edit Form -->
+   <form method="POST" action="<%= editIndex !== null ? '/todo/update' : '/todo/add' %>">
+    <input type="hidden" name="index" value="<%= editIndex !== null ? editIndex : '' %>">
+    <input name="text" required value="<%= editIndex !== null ? list[editIndex] : '' %>">
+    <button type="submit">
+        <%= editIndex !== null ? 'Update' : 'Add' %>
+    </button>
+</form>
+
+
+    <!-- Todo List -->
+    <ul>
+        <% list.forEach((t, i) => { %>
+            <li>
+                <%= t %>
+                <a href="/todo/edit?editIndex=<%= i %>">Edit</a>
+                <form method="POST" action="/todo/delete" style="display:inline;">
+                    <input type="hidden" name="index" value="<%= i %>">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+    <!-- Logout -->
+    <form method="POST" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+
+</html>
