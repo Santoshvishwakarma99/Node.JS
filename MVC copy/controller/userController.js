@@ -1,6 +1,7 @@
 const passport = require('passport');
 const usermodel=require('../model/usermodel');
 const nodemailer = require('nodemailer');
+const jwt=require('jsonwebtoken');
 
 const Showregister=(req,res)=>{
     res.render("register")
@@ -13,6 +14,23 @@ const Register=async(req,res)=>{
     res.send(data);
 }
 
+// const login = async (req, res) => {
+//     const { username, password } = req.body;
+
+//     // check username exist
+//     const user = await usermodel.findOne({ username , password });
+
+//    if(!user){
+//     return res.send("user not found")
+//    }
+// res.cookie("user",user._id).send("login successful")
+
+// };
+
+
+
+// jwt
+
 const login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -22,7 +40,20 @@ const login = async (req, res) => {
    if(!user){
     return res.send("user not found")
    }
-res.cookie("user",user._id).send("login successful")
+   if(user.password !== password){
+    return res.send("password not match")
+   }
+   if(user && user.password === password)
+   {
+    let payload={
+        username:user.username,
+        password:user.password,
+        id:user.id
+    }
+    let token=jwt.sign(payload,"private-key");
+    console.log(token)
+    return res.cookie("token",token ).send("login in")
+   }
 
 };
 
@@ -68,6 +99,15 @@ const mail=(req,res)=>{
 }
 
 
+
+const verifyToken=(req,res)=>{
+    // console.log(req.headers.authorization)
+    let token=req.headers.authorization.split(" ")[1];
+    let decoded=jwt.verify(token,"private-key");
+    return res.send(decoded);
+}
+
+
 const getAllUsers=async(req,res)=>{
     const data=await usermodel.find();
     res.send(data);
@@ -85,4 +125,4 @@ const updateUser=async(req,res)=>{
     res.send(data);
 }
 
-module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister,local,password,mail};
+module.exports={Register,login, getAllUsers, deleteUser, updateUser,Showlogin,Showregister,local,password,mail,verifyToken};

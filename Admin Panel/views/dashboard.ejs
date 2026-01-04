@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+   body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4f46e5, #2563eb);
+    color: #1e293b; 
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.97);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+header a {
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+header a:hover {
+    background: #1d4ed8;
+}
+
+main {
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 900px;
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.dashboard-card h2 span {
+    color: #2563eb; 
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.stat-box {
+    background: #f1f5f9;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 1px #e2e8f0;
+    transition: 0.3s;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-box h3 {
+    font-size: 22px;
+    color: #2563eb;
+    margin-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #e2e8f0;
+    font-size: 14px;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin dashboard</h1>
+        <a href="/admin/logout">Logout</a>
+    </header>
+
+    <main>
+        <div class="dashboard-card">
+            <h2>Welcome, <span><%= user.email %></span></h2>
+            <p>Manage your application from this dashboard</p>
+
+          <div class="stats">
+    <div class="stat-box">
+        <h3>Total Admins</h3>
+        <span>5 Users</span>
+    </div>
+
+    <div class="stat-box">
+        <h3>Active Sessions</h3>
+        <span>12 Online</span>
+    </div>
+
+    <div class="stat-box">
+        <h3>Security</h3>
+        <span>JWT Enabled </span>
+    </div>
+
+    <div class="stat-box">
+        <h3>System Status</h3>
+        <span>All OK</span>
+    </div>
+</div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 MAKE ADMIN PANEL ON REQUIREMNT. ALL RIGHTS RESERVED.
+    </footer>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 const express = require('express');
 const isAuth=require("../middleware/Auth")
-const {Register, login ,getAllUsers , deleteUser, updateUser,Showlogin,Showregister,local,password,mail }=require("../controller/userController");
+const {Register, login ,getAllUsers , deleteUser, updateUser,Showlogin,Showregister,local,password,mail,verifyToken }=require("../controller/userController");
 const passport = require('passport');
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.get('/', isAuth,getAllUsers)
 router.post('/local',passport.authenticate('local'),local)
 router.post("/password/:id",password)
 router.post("/mail",mail);
+router.post("/verify",verifyToken);
 
 
 module.exports = router;
